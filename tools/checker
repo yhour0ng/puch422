@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Very simple tool to help manage floods of PRs
+# Needs GitHub CLI installed: https://cli.github.com/manual/
+# As this is so simple, I don't consider it copyrightable
+
+for I in `gh pr list|cut -f 1`; do
+    gh pr diff $I
+    read -p"Accept $I? " foo
+    if [[ "$foo" == "y" ]];
+        then gh pr merge -m $I
+    fi
+    echo
+done
+
